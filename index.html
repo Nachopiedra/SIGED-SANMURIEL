@@ -23,29 +23,29 @@ async function local(){
   const actualizado=(d.sistema||{}).actualizado;
 
   document.getElementById("updated").textContent =
-   actualizado ? "Datos SIGED � "+new Date(actualizado).toLocaleString("es-ES")
+   actualizado ? "Datos SIGED · "+new Date(actualizado).toLocaleString("es-ES")
                : "Datos SIGED";
 
   document.getElementById("meteo").innerHTML =
-   row("Temperatura",(m.temperatura_c??"--")+" �C")+
+   row("Temperatura",(m.temperatura_c??"--")+" °C")+
    row("Humedad",(m.humedad_pct??"--")+" %")+
    row("Lluvia",(m.lluvia_mm_h??"--")+" mm/h")+
    row("Lluvia hoy",(m.lluvia_hoy_mm??"--")+" mm")+
    row("Viento",(m.viento_kmh??"--")+" km/h")+
    row("Racha",(m.racha_kmh??"--")+" km/h")+
-   row("Direcci�n",(m.direccion_grados??"--")+"�")+
-   row("Radiaci�n solar",(m.radiacion_w_m2??"--")+" W/m�")+
-   row("Presi�n",(m.presion_hpa??"--")+" hPa");
+   row("Dirección",(m.direccion_grados??"--")+"°")+
+   row("Radiación solar",(m.radiacion_w_m2??"--")+" W/m²")+
+   row("Presión",(m.presion_hpa??"--")+" hPa");
 
   document.getElementById("grid").innerHTML =
    row("Estado",g.estado||"--",g.estado==="NORMAL"?"ok":"")+
-   row("Tensi�n",(g.tension_v??"--")+" V")+
+   row("Tensión",(g.tension_v??"--")+" V")+
    row("Frecuencia",(g.frecuencia_hz??"--")+" Hz")+
    row("Calidad",g.calidad||"--",g.calidad==="NORMAL"?"ok":"");
 
   document.getElementById("incidents").innerHTML =
    b.tipo
-   ? `<div class="incident"><b>${b.tipo}</b> � ${b.fecha?new Date(b.fecha).toLocaleString("es-ES"):"--"} � ${b.duracion_s??"--"} s � ${b.estado==="RECUPERADO"?"? Recuperado":b.estado||"?? En curso"}</div>`
+   ? `<div class="incident"><b>${b.tipo}</b> · ${b.fecha?new Date(b.fecha).toLocaleString("es-ES"):"--"} · ${b.duracion_s??"--"} s · ${b.estado==="RECUPERADO"?"? Recuperado":b.estado||"?? En curso"}</div>`
    : "Sin incidencias registradas";
 
  }catch(e){
