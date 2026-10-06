@@ -1,7 +1,100 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SIGED SANMURIEL</title><style>
 :root{--bg:#06131d;--card:#0b1e29;--line:#203947;--text:#eef8ff;--muted:#83b9d6;--cyan:#22d3ee;--green:#55e6a5;--amber:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071923,#041019);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}.wrap{max-width:1180px;margin:auto;padding:24px}.hero{padding:24px 0 18px;border-bottom:1px solid var(--line);margin-bottom:22px}.brand{font-size:30px;font-weight:900;letter-spacing:1.5px}.brand b{color:var(--cyan)}.sub{color:var(--muted);margin-top:6px}.badge{display:inline-block;margin-top:12px;padding:7px 12px;border:1px solid #24576a;border-radius:999px;color:var(--cyan);font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:rgba(11,30,41,.96);border:1px solid var(--line);border-radius:18px;padding:22px}.wide{grid-column:1/-1}.card h2{font-size:18px;margin:0 0 14px}.row{display:flex;justify-content:space-between;gap:20px;padding:11px 0;border-bottom:1px solid var(--line);color:var(--muted)}.row strong{color:white;text-align:right}.ok{color:var(--green)!important}.forecast{display:grid;grid-template-columns:repeat(8,minmax(105px,1fr));gap:10px;overflow-x:auto;padding-bottom:5px}.hour{min-width:105px;text-align:center;background:#081821;border:1px solid var(--line);border-radius:14px;padding:13px 8px}.hour .t{font-size:13px;color:var(--muted)}.hour .ico{font-size:26px;margin:7px}.hour .temp{font-weight:800;font-size:18px}.hour .mini{font-size:12px;color:var(--muted);margin-top:5px}.incident{padding:12px 0;border-bottom:1px solid var(--line)}.incident:last-child{border:0}.incident b{color:#fff}.foot{text-align:center;color:#5f8aa0;font-size:12px;padding:24px}.source{font-size:12px;color:#658fa4;margin-top:12px}@media(max-width:760px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.brand{font-size:24px}.wrap{padding:15px}}
-</style></head><body><main class="wrap"><header class="hero"><div class="brand">SIGED <b>SANMURIEL</b></div><div class="sub">Información ambiental y supervisión comunitaria de la red eléctrica</div><span class="badge" id="updated">Actualizando…</span></header><div class="grid">
+</style>
+<style id="siged-mobile-v2">
+@media (max-width: 700px) {
+
+  /* Márgenes generales */
+  body {
+    font-size: 16px !important;
+  }
+
+  main, .wrap, .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Cabecera */
+  h1 {
+    font-size: 28px !important;
+    line-height: 1.1 !important;
+  }
+
+  /* Tarjetas principales */
+  .card {
+    padding: 18px !important;
+  }
+
+  .card h2,
+  .card h3 {
+    font-size: 19px !important;
+  }
+
+  /* Filas dato -> valor.
+     Evitamos mandar el valor al extremo derecho */
+  .row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 135px !important;
+    column-gap: 14px !important;
+    align-items: center !important;
+    font-size: 16px !important;
+  }
+
+  .row > :first-child {
+    text-align: left !important;
+  }
+
+  .row > :last-child {
+    text-align: right !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+  }
+
+  /* Predicción:
+     4 horas por fila en móvil */
+  #forecast {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  #forecast > * {
+    min-width: 0 !important;
+    width: auto !important;
+    padding: 10px 5px !important;
+  }
+
+  /* Texto de las tarjetas de previsión */
+  #forecast .hour,
+  #forecast .time {
+    font-size: 14px !important;
+  }
+
+  #forecast .temp {
+    font-size: 22px !important;
+    font-weight: 800 !important;
+  }
+
+  #forecast img {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  #forecast > * {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Black Box */
+  #incidents {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+}
+</style>
+
+</head><body><main class="wrap"><header class="hero"><div class="brand">SIGED <b>SANMURIEL</b></div><div class="sub">Información ambiental y supervisión comunitaria de la red eléctrica</div><span class="badge" id="updated">Actualizando…</span></header><div class="grid">
 <section class="card"><h2>🌦️ Meteorología · estación local</h2><div id="meteo"></div><div class="source">Observación: estación Ecowitt integrada en SIGED</div></section>
 <section class="card"><h2>⚡ Grid Watch · red eléctrica</h2><div id="grid"></div><div class="source">Medición desde nodo SIGED Edge · datos comunitarios filtrados</div></section>
 <section class="card wide"><h2>🔮 Predicción meteorológica · próximas 24 horas</h2><div class="forecast" id="forecast">Cargando predicción…</div><div class="source">Predicción: Open-Meteo · actualización directa desde el navegador</div></section>
