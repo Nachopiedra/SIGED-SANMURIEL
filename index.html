@@ -138,7 +138,7 @@ async function local(){
 
   document.getElementById("incidents").innerHTML =
    b.tipo
-   ? `<div class="incident"><b>${b.tipo}</b> · ${b.fecha?new Date(b.fecha).toLocaleString("es-ES"):"--"} · ${b.duracion_s??"--"} s · ${b.estado==="RECUPERADO"?"? Recuperado":b.estado||"?? En curso"}</div>`
+   ? `<div class="incident"><b>${b.tipo}</b> · ${b.fecha?new Date(b.fecha).toLocaleString("es-ES"):"--"} · ${b.duracion_s??"--"} s · ${b.estado==="RECUPERADO"?"Recuperado":b.estado||"En curso"}</div>`
    : "Sin incidencias registradas";
 
  }catch(e){
