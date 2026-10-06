@@ -1,16 +1,58 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SIGED SANMURIEL</title><style>
 :root{--bg:#06131d;--card:#0b1e29;--line:#203947;--text:#eef8ff;--muted:#83b9d6;--cyan:#22d3ee;--green:#55e6a5;--amber:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071923,#041019);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}.wrap{max-width:1180px;margin:auto;padding:24px}.hero{padding:24px 0 18px;border-bottom:1px solid var(--line);margin-bottom:22px}.brand{font-size:30px;font-weight:900;letter-spacing:1.5px}.brand b{color:var(--cyan)}.sub{color:var(--muted);margin-top:6px}.badge{display:inline-block;margin-top:12px;padding:7px 12px;border:1px solid #24576a;border-radius:999px;color:var(--cyan);font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:rgba(11,30,41,.96);border:1px solid var(--line);border-radius:18px;padding:22px}.wide{grid-column:1/-1}.card h2{font-size:18px;margin:0 0 14px}.row{display:flex;justify-content:space-between;gap:20px;padding:11px 0;border-bottom:1px solid var(--line);color:var(--muted)}.row strong{color:white;text-align:right}.ok{color:var(--green)!important}.forecast{display:grid;grid-template-columns:repeat(8,minmax(105px,1fr));gap:10px;overflow-x:auto;padding-bottom:5px}.hour{min-width:105px;text-align:center;background:#081821;border:1px solid var(--line);border-radius:14px;padding:13px 8px}.hour .t{font-size:13px;color:var(--muted)}.hour .ico{font-size:26px;margin:7px}.hour .temp{font-weight:800;font-size:18px}.hour .mini{font-size:12px;color:var(--muted);margin-top:5px}.incident{padding:12px 0;border-bottom:1px solid var(--line)}.incident:last-child{border:0}.incident b{color:#fff}.foot{text-align:center;color:#5f8aa0;font-size:12px;padding:24px}.source{font-size:12px;color:#658fa4;margin-top:12px}@media(max-width:760px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.brand{font-size:24px}.wrap{padding:15px}}
-</style></head><body><main class="wrap"><header class="hero"><div class="brand">SIGED <b>SANMURIEL</b></div><div class="sub">Información ambiental y supervisión comunitaria de la red eléctrica</div><span class="badge" id="updated">Actualizando…</span></header><div class="grid">
-<section class="card"><h2>🌦️ Meteorología · estación local</h2><div id="meteo"></div><div class="source">Observación: estación Ecowitt integrada en SIGED</div></section>
-<section class="card"><h2>⚡ Grid Watch · red eléctrica</h2><div id="grid"></div><div class="source">Medición desde nodo SIGED Edge · datos comunitarios filtrados</div></section>
-<section class="card wide"><h2>🔮 Predicción meteorológica · próximas 24 horas</h2><div class="forecast" id="forecast">Cargando predicción…</div><div class="source">Predicción: Open-Meteo · actualización directa desde el navegador</div></section>
-<section class="card wide"><h2>⬛ Black Box · incidencias de red</h2><div id="incidents"></div><div class="source">Solo se publican eventos eléctricos. Los datos energéticos privados de la vivienda no se comparten.</div></section>
-</div><footer class="foot">SIGED SANMURIEL · demostrador comunitario basado en SIGED Edge</footer></main><script>
+</style></head><body><main class="wrap"><header class="hero"><div class="brand">SIGED <b>SANMURIEL</b></div><div class="sub">InformaciÃ³n ambiental y supervisiÃ³n comunitaria de la red elÃ©ctrica</div><span class="badge" id="updated">Actualizandoâ€¦</span></header><div class="grid">
+<section class="card"><h2>ðŸŒ¦ï¸ MeteorologÃ­a Â· estaciÃ³n local</h2><div id="meteo"></div><div class="source">ObservaciÃ³n: estaciÃ³n Ecowitt integrada en SIGED</div></section>
+<section class="card"><h2>âš¡ Grid Watch Â· red elÃ©ctrica</h2><div id="grid"></div><div class="source">MediciÃ³n desde nodo SIGED Edge Â· datos comunitarios filtrados</div></section>
+<section class="card wide"><h2>ðŸ”® PredicciÃ³n meteorolÃ³gica Â· prÃ³ximas 24 horas</h2><div class="forecast" id="forecast">Cargando predicciÃ³nâ€¦</div><div class="source">PredicciÃ³n: Open-Meteo Â· actualizaciÃ³n directa desde el navegador</div></section>
+<section class="card wide"><h2>â¬› Black Box Â· incidencias de red</h2><div id="incidents"></div><div class="source">Solo se publican eventos elÃ©ctricos. Los datos energÃ©ticos privados de la vivienda no se comparten.</div></section>
+</div><footer class="foot">SIGED SANMURIEL Â· demostrador comunitario basado en SIGED Edge</footer></main><script>
 const LAT=40.718802,LON=-3.900386;
 const row=(a,b,c='')=>`<div class="row"><span>${a}</span><strong class="${c}">${b}</strong></div>`;
-const wxIcon=c=>({0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'🌨️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'}[c]||'🌤️');
-async function local(){try{const d=await fetch('data/sanmuriel.json?'+Date.now()).then(r=>r.json());document.getElementById('updated').textContent='Datos SIGED · '+new Date(d.updated_at).toLocaleString('es-ES');const m=d.meteo||{};document.getElementById('meteo').innerHTML=row('Temperatura',m.temperatura_c+' °C')+row('Humedad',m.humedad_pct+' %')+row('Lluvia',m.lluvia_mm_h+' mm/h')+row('Lluvia hoy',m.lluvia_hoy_mm+' mm')+row('Viento',m.viento_kmh+' km/h')+row('Racha',m.racha_kmh+' km/h')+row('Dirección',m.direccion_grados+'°')+row('Radiación solar',m.radiacion_w_m2+' W/m²')+row('Presión',m.presion_hpa+' hPa');const g=d.grid||{};document.getElementById('grid').innerHTML=row('Estado',g.estado||'--',g.estado==='NORMAL'?'ok':'')+row('Tensión',g.tension_v+' V')+row('Frecuencia',g.frecuencia_hz+' Hz')+row('Calidad',g.calidad||'--');const x=d.incidentes||[];document.getElementById('incidents').innerHTML=x.length?x.map(v=>`<div class="incident"><b>${v.tipo}</b> · ${new Date(v.fecha).toLocaleString('es-ES')} · ${v.duracion_s} s · ${v.recuperado?'✅ Recuperado':'⚠️ En curso'}</div>`).join(''):'Sin incidencias registradas';}catch(e){document.getElementById('updated').textContent='Datos SIGED no disponibles';}}
-async function forecast(){try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&hourly=temperature_2m,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_gusts_10m,shortwave_radiation&forecast_hours=24&timezone=Europe%2FMadrid`;const d=await fetch(u).then(r=>r.json()),h=d.hourly;document.getElementById('forecast').innerHTML=h.time.map((t,i)=>`<div class="hour"><div class="t">${new Date(t).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})}</div><div class="ico">${wxIcon(h.weather_code[i])}</div><div class="temp">${Math.round(h.temperature_2m[i])}°</div><div class="mini">💧 ${h.precipitation_probability[i]}% · ${h.precipitation[i]} mm</div><div class="mini">💨 ${Math.round(h.wind_speed_10m[i])}/${Math.round(h.wind_gusts_10m[i])} km/h</div><div class="mini">☀ ${Math.round(h.shortwave_radiation[i])} W/m²</div></div>`).join('');}catch(e){document.getElementById('forecast').textContent='Predicción temporalmente no disponible';}}
+const wxIcon=c=>({0:'â˜€ï¸',1:'ðŸŒ¤ï¸',2:'â›…',3:'â˜ï¸',45:'ðŸŒ«ï¸',48:'ðŸŒ«ï¸',51:'ðŸŒ¦ï¸',53:'ðŸŒ¦ï¸',55:'ðŸŒ§ï¸',61:'ðŸŒ§ï¸',63:'ðŸŒ§ï¸',65:'ðŸŒ§ï¸',71:'ðŸŒ¨ï¸',73:'ðŸŒ¨ï¸',75:'â„ï¸',80:'ðŸŒ¦ï¸',81:'ðŸŒ§ï¸',82:'â›ˆï¸',95:'â›ˆï¸',96:'â›ˆï¸',99:'â›ˆï¸'}[c]||'ðŸŒ¤ï¸');
+async function local(){
+ try{
+  const d=await fetch("./sanmuriel.json?ts="+Date.now(),{cache:"no-store"}).then(r=>{
+   if(!r.ok) throw new Error("HTTP "+r.status);
+   return r.json();
+  });
+
+  const m=d.meteorologia||{};
+  const g=d.red||{};
+  const b=(d.black_box||{}).ultimo_incidente||{};
+  const actualizado=(d.sistema||{}).actualizado;
+
+  document.getElementById("updated").textContent =
+   actualizado ? "Datos SIGED · "+new Date(actualizado).toLocaleString("es-ES")
+               : "Datos SIGED";
+
+  document.getElementById("meteo").innerHTML =
+   row("Temperatura",(m.temperatura_c??"--")+" °C")+
+   row("Humedad",(m.humedad_pct??"--")+" %")+
+   row("Lluvia",(m.lluvia_mm_h??"--")+" mm/h")+
+   row("Lluvia hoy",(m.lluvia_hoy_mm??"--")+" mm")+
+   row("Viento",(m.viento_kmh??"--")+" km/h")+
+   row("Racha",(m.racha_kmh??"--")+" km/h")+
+   row("Dirección",(m.direccion_grados??"--")+"°")+
+   row("Radiación solar",(m.radiacion_w_m2??"--")+" W/m²")+
+   row("Presión",(m.presion_hpa??"--")+" hPa");
+
+  document.getElementById("grid").innerHTML =
+   row("Estado",g.estado||"--",g.estado==="NORMAL"?"ok":"")+
+   row("Tensión",(g.tension_v??"--")+" V")+
+   row("Frecuencia",(g.frecuencia_hz??"--")+" Hz")+
+   row("Calidad",g.calidad||"--",g.calidad==="NORMAL"?"ok":"");
+
+  document.getElementById("incidents").innerHTML =
+   b.tipo
+   ? `<div class="incident"><b>${b.tipo}</b> · ${b.fecha?new Date(b.fecha).toLocaleString("es-ES"):"--"} · ${b.duracion_s??"--"} s · ${b.estado==="RECUPERADO"?"✅ Recuperado":b.estado||"⚠️ En curso"}</div>`
+   : "Sin incidencias registradas";
+
+ }catch(e){
+  document.getElementById("updated").textContent="Datos SIGED no disponibles";
+  console.error(e);
+ }
+}
+async function forecast(){try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&hourly=temperature_2m,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_gusts_10m,shortwave_radiation&forecast_hours=24&timezone=Europe%2FMadrid`;const d=await fetch(u).then(r=>r.json()),h=d.hourly;document.getElementById('forecast').innerHTML=h.time.map((t,i)=>`<div class="hour"><div class="t">${new Date(t).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})}</div><div class="ico">${wxIcon(h.weather_code[i])}</div><div class="temp">${Math.round(h.temperature_2m[i])}Â°</div><div class="mini">ðŸ’§ ${h.precipitation_probability[i]}% Â· ${h.precipitation[i]} mm</div><div class="mini">ðŸ’¨ ${Math.round(h.wind_speed_10m[i])}/${Math.round(h.wind_gusts_10m[i])} km/h</div><div class="mini">â˜€ ${Math.round(h.shortwave_radiation[i])} W/mÂ²</div></div>`).join('');}catch(e){document.getElementById('forecast').textContent='PredicciÃ³n temporalmente no disponible';}}
 local();forecast();setInterval(local,60000);setInterval(forecast,900000);
 </script></body></html>
