@@ -1,25 +1,25 @@
 {
   "sistema": {
     "nombre": "SIGED SANMURIEL",
-    "actualizado": "2026-11-06T17:31:05"
+    "actualizado": "2026-11-06T18:01:05"
   },
   "meteorologia": {
-    "temperatura_c": 13.72,
-    "humedad_pct": 37.0,
+    "temperatura_c": 11.89,
+    "humedad_pct": 41.0,
     "lluvia_mm_h": 0.0,
     "lluvia_1h_mm": 0.0,
     "lluvia_hoy_mm": 0.0,
-    "viento_kmh": 2.09,
-    "racha_kmh": 3.54,
-    "direccion_grados": 217.0,
-    "radiacion_w_m2": 24.7,
+    "viento_kmh": 0.0,
+    "racha_kmh": 0.0,
+    "direccion_grados": 211.0,
+    "radiacion_w_m2": 2.8,
     "uvi": 0.0,
     "presion_hpa": 1019.98
   },
   "red": {
     "estado": "NORMAL",
-    "tension_v": 227.4,
-    "frecuencia_hz": 50.02,
+    "tension_v": 229.5,
+    "frecuencia_hz": 50.01,
     "calidad": "NORMAL"
   },
   "black_box": {
