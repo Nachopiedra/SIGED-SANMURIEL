@@ -1,7 +1,7 @@
 {
   "sistema": {
     "nombre": "SIGED SANMURIEL",
-    "actualizado": "2026-11-13T08:31:04"
+    "actualizado": "2026-11-13T09:01:05"
   },
   "meteorologia": {
     "temperatura_c": 13.28,
@@ -18,8 +18,8 @@
   },
   "red": {
     "estado": "NORMAL",
-    "tension_v": 230.2,
-    "frecuencia_hz": 49.98,
+    "tension_v": 228.7,
+    "frecuencia_hz": 49.99,
     "calidad": "NORMAL"
   },
   "black_box": {
